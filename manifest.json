@@ -1,0 +1,19 @@
+{
+  "manifest_version": 2,
+  "name": "TCG Pro Highlight Expedited Orders",
+  "version": "1.0",
+  "permissions": ["activeTab", "storage"],
+  "description": "Highlights shippable orders with Expedited shipping on your TCGPlayer Order list.",
+  "icons": {
+    "48": "icons/taco-48.png",
+    "96": "icons/taco-96.png"
+  },
+  "content_scripts": [
+    {
+      "matches": ["*://store.tcgplayer.com/admin/orders/*"],
+      "js": ["js/the-business.js"],
+      "css": ["css/styles.css"],
+      "run_at": "document_end"
+    }
+  ]
+}
