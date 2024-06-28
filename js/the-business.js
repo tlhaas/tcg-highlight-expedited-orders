@@ -1,9 +1,3 @@
-var link = document.createElement("link");
-link.href = browser.extension.getURL("styles.css");
-link.type = "text/css";
-link.rel = "stylesheet";
-document.head.appendChild(link);
-
 // Select the table element you want to observe
 const table = document.querySelector('table');
 
