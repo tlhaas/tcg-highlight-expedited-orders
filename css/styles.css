@@ -1,4 +1,5 @@
 tr.ready-to-ship.taco-expedited { background-color: #e7b293 !important; }
+tr.ready-to-ship.taco-intl { background-color: #e7b293 !important; }
 tr.ready-to-ship.taco-bmwt { background-color: #e0dd81 !important; }
 tr.ready-to-ship.taco-bmwt td { font-weight: bold; }
 tr.taco-pickup { background-color: #dbb4db !important; }

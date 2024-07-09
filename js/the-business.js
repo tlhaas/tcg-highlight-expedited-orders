@@ -44,6 +44,7 @@ const observer = new MutationObserver(function(mutations) {
         console.log("asdf:" + channel + " " + status);
 
         if (shipType == "Expedited") { treno.classList.add("taco-expedited"); }
+        if (shipType == "International") { treno.classList.add("taco-intl"); }
         if (orderTotal > 49.99) { treno.classList.add("taco-bmwt"); }
         if (channel == "My Store" && status == "Order Received") { treno.classList.add("taco-pickup"); }
         if (status == "Presale") { treno.classList.add("taco-presale"); }
