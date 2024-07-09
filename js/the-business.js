@@ -41,8 +41,6 @@ const observer = new MutationObserver(function(mutations) {
         var statusTd      = treno.querySelector("td[data-label='Status']");
         var status        = statusTd.firstChild.nodeValue.trim();  
 
-        console.log("asdf:" + channel + " " + status);
-
         if (shipType == "Expedited") { treno.classList.add("taco-expedited"); }
         if (shipType == "International") { treno.classList.add("taco-intl"); }
         if (orderTotal > 49.99) { treno.classList.add("taco-bmwt"); }
