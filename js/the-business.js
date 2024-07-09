@@ -11,7 +11,7 @@ const table = document.querySelector('table');
 // This is pretty inefficient, but it's hard to pin down exactly what's being updated based on your position in the Pages of orders.
 // For example, Page 1 of the Orders list is all new <tr>'s inserted into the <tbody>, which is cool and awesome.
 // But when you page over to Page 2 the <tr>'s seem to be reused and updated with new <td>'s or <div>'s or some shit.
-// This is not ccool and awesome.
+// This is not cool and awesome.
 // You might be thinking... so just watch for <td> or <div> updates in the <table> right?
 // WRONG. Sometimes rows just seemingly appear from nowhere and don't register as a mutation. 
 // I know this seems impossible, but I was watching for <div> updates on Page 2 using CSS to 
@@ -32,11 +32,22 @@ const observer = new MutationObserver(function(mutations) {
       var allTR = table.querySelectorAll("tbody > tr");
 
       allTR.forEach(function(treno){
-        var shipType = treno.querySelector("td[data-label='Shipping Type']").firstChild.nodeValue.trim();  
-        if (shipType == "Expedited")
-        {
-          treno.classList.add("taco-expedited");
-        }
+        var shipTypeTd    = treno.querySelector("td[data-label='Shipping Type']")
+        var shipType      = shipTypeTd.firstChild.nodeValue.trim();  
+        var orderTotalTd  = treno.querySelector("td[data-label='Total Amt']");
+        var orderTotal    = Number(orderTotalTd.firstChild.nodeValue.trim().replace("$",""));
+        var channelTd     = treno.querySelector("td[data-label='Channel']");
+        var channel       = channelTd.firstChild.nodeValue.trim();  
+        var statusTd      = treno.querySelector("td[data-label='Status']");
+        var status        = statusTd.firstChild.nodeValue.trim();  
+
+        console.log("asdf:" + channel + " " + status);
+
+        if (shipType == "Expedited") { treno.classList.add("taco-expedited"); }
+        if (orderTotal > 49.99) { treno.classList.add("taco-bmwt"); }
+        if (channel == "My Store" && status == "Order Received") { treno.classList.add("taco-pickup"); }
+        if (status == "Presale") { treno.classList.add("taco-presale"); }
+
       });
 
       /*
