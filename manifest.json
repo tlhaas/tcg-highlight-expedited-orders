@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "TCG Highlight Expedited Orders",
-  "version": "1.2.1",
+  "version": "1.2.2",
   "permissions": ["activeTab", "storage"],
   "description": "Highlights shippable orders with Expedited shipping on your TCGPlayer Order list.",
   "icons": {

@@ -35,7 +35,7 @@ const observer = new MutationObserver(function(mutations) {
         var shipTypeTd    = treno.querySelector("td[data-label='Shipping Type']")
         var shipType      = shipTypeTd.firstChild.nodeValue.trim();  
         var orderTotalTd  = treno.querySelector("td[data-label='Total Amt']");
-        var orderTotal    = Number(orderTotalTd.firstChild.nodeValue.trim().replace("$",""));
+        var orderTotal    = Number(orderTotalTd.firstChild.nodeValue.trim().replace("$","").replace(",",""));
         var channelTd     = treno.querySelector("td[data-label='Channel']");
         var channel       = channelTd.firstChild.nodeValue.trim();  
         var statusTd      = treno.querySelector("td[data-label='Status']");
