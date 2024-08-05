@@ -41,9 +41,23 @@ const observer = new MutationObserver(function(mutations) {
         var statusTd      = treno.querySelector("td[data-label='Status']");
         var status        = statusTd.firstChild.nodeValue.trim();  
 
+        // they reuse the <tr>s so we gotta remove all taco class on reload
+        const tacoClasses = ["taco-expedited","taco-intl","taco-bmwt","taco-pickup","taco-presale"];
+
+        tacoClasses.forEach(
+          (tacoClass) => {
+            treno.classList.remove(tacoClass);
+          }
+        );
+
         if (shipType == "Expedited") { treno.classList.add("taco-expedited"); }
         if (shipType == "International") { treno.classList.add("taco-intl"); }
-        if (orderTotal > 49.99) { treno.classList.add("taco-bmwt"); }
+        if (orderTotal > 49.99) { 
+          // we want to keep Expedited orders red regardless of dollar amount
+          if (shipType != "Expedited"){
+            treno.classList.add("taco-bmwt"); 
+          }
+        }
         if (channel == "My Store" && status == "Order Received") { treno.classList.add("taco-pickup"); }
         if (status == "Presale") { treno.classList.add("taco-presale"); }
 
