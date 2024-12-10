@@ -9,4 +9,6 @@ tr.ready-to-ship.taco-bmwt td, tr.taco-bmwt td { font-weight: bold; }
 
 tr.taco-pickup { background-color: #dbb4db !important; }
 
+tr.taco-ready-for-pickup { background-color: #acafdd !important; }
+
 tr.taco-presale { background-color: #ffbf00 !important; }
