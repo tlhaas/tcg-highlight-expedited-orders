@@ -1,29 +1,94 @@
+// very chatGPT name for a function 
+function observeDynamicContent() {
+
+  // UGH.
+  const rootNode = document.body; 
+
+  const mutationCallback = function(mutationsList, observer) {
+    for (const mutation of mutationsList) {
+    
+      /* 
+      Okay so sometimes the SPA is adding new TR tags to the table.
+      Other times it's targeting TD tags for updates.
+      Further still, sometimes it's targeting SPAN tags inside of TD tags for updates.
+
+      None of these, nor the table that contains them, exists on page load. 
+
+      Therefore, we must target the BODY and just watch for ALL childList changes (add/remove nodes),
+      and each time that happens, we have to look for ALL of the TR tags, pull the data, and update accordingly.
+
+      I hate this, but it's the most straight forward way I can think to do this. Otherwise we miss critical updates
+      to the table or have to get very specific (read: rigid and complicated) with our targeting of mutations 
+      and that seems like a rabbit hole down which I have no interest going. (Is that proper grammar?)
+
+      Note: Originally I tried only only looking at mutations that targeted tbody.tcg-table-body but this was not
+      reliable for the aforementioned reasons.
+      */
+
+      
+      if(mutation.type === 'childList'){  
+
+        //console.log(mutation)
+
+        var allTR = rootNode.querySelectorAll("tbody.tcg-table-body > tr");
+
+        allTR.forEach(tr => {
+
+          // variables for efficiency
+          const parentnode  = tr.parentElement;
+          const trclass     = tr.className;
+
+          // get the row data
+          const tdElements    = tr.querySelectorAll('td');
+          const buyerName     = tdElements[2].innerText;
+          const status        = tdElements[5].innerText;
+          const shippingType  = tdElements[6].innerText;
+          const orderTotal    = parseFloat(tdElements[9].innerText.replace('$', '')); 
+
+          // remove the taco classes from all <tr> elements because the <tr>s get reused by the SPA code
+          const tacoClasses = ["taco-expedited","taco-intl","taco-bmwt","taco-pickup","taco-presale"];  
+          tacoClasses.forEach(
+            (tacoClass) => {
+              tr.classList.remove(tacoClass);
+            }
+          );
+
+          if(orderTotal > 49.99 && shippingType === "Standard") { tr.classList.add("taco-bmwt"); }
+          if(shippingType === "Expedited")                      { tr.classList.add("taco-expedited"); }
+          if(shippingType === "International")                  { tr.classList.add("taco-intl"); }
+          if(shippingType === "In-Store Pickup")                { tr.classList.add("taco-pickup"); }
+          if(status === "Presale")                              { tr.classList.add("taco-presale"); }
+
+          // we logged tr's and their contents here to compare against mutation events and their targets
+          //console.log(buyerName, ' ' , shippingType, ' ', orderTotal);
+          //console.log(tr)
+          
+        });
+      } // if mutation.type
+    } // end for
+  }; // end mutationCallback
+
+  // Create the observer with the callback
+  const observer = new MutationObserver(mutationCallback);
+
+  // Start observing the body for added elements, including deeper nodes
+  observer.observe(rootNode, {
+    childList: true,  // Watch for additions/removals of child elements
+    subtree: true,    // Observe all descendant nodes, not just direct children
+  });
+
+} // end observeDynamicContent
+
+// Start observing the dynamic content when the page loads
+
+const UI_VER = window.location.host == "sellerportal.tcgplayer.com" ? "NEW" : "OLD";
+console.log(UI_VER);
+observeDynamicContent();
+
+/*
+
 // Select the table element you want to observe
 const table = document.querySelector('table');
-
-// Create a mutation observer instance
-// 
-// !!! EXPLANATION !!!
-// 
-// We're watching the table for _any_ changes to the child nodes (aka `childList` mutation).
-// Why? It seems like they're using Vue and all XHR things happen after `document.ready`.
-// If something happens to the <table>, we're gonna check ALL the <tr> in <tbody>
-// This is pretty inefficient, but it's hard to pin down exactly what's being updated based on your position in the Pages of orders.
-// For example, Page 1 of the Orders list is all new <tr>'s inserted into the <tbody>, which is cool and awesome.
-// But when you page over to Page 2 the <tr>'s seem to be reused and updated with new <td>'s or <div>'s or some shit.
-// This is not cool and awesome.
-// You might be thinking... so just watch for <td> or <div> updates in the <table> right?
-// WRONG. Sometimes rows just seemingly appear from nowhere and don't register as a mutation. 
-// I know this seems impossible, but I was watching for <div> updates on Page 2 using CSS to 
-// color it's grandparent (should have been a <tr>) and 4 rows in the middle of 25 just weren't being recognized.
-// I don't fucking know. I'm also an idiot.
-// This shit seems to work now and I love it just like it is.
-// I'd say we could narrow the mutation focus to `table > tbody` but, frankly, I don't give a fuck.
-// Also, regarding the inefficiency... there isn't any noticable lag on my old-as-fuck MacBookPro so that's cool.
-//
-// !!! MOST IMPORTANT !!! 
-// This add-on should not have to exist. 
-// This is a problem that could be solved with like one line of CSS and a class, but I don't work for TCGPlayer so this is our only option.
 
 const observer = new MutationObserver(function(mutations) {
   mutations.forEach(function(mutation) {
@@ -63,18 +128,18 @@ const observer = new MutationObserver(function(mutations) {
 
       });
 
-      /*
-        Uncomment for troubleshooting:
-        DEAR FIREFOX REVIEWERS. Please forgive me. I know this is gross, but this might be helpful for me in the future. 
+      
+      //  Uncomment for troubleshooting:
+      //DEAR FIREFOX REVIEWERS. Please forgive me. I know this is gross, but this might be helpful for me in the future. 
 
-        console.log("------------------------------------------------");
-        console.log("Mutation type" , mutation.type); // Type of mutation (attributes, childList, etc.)
-        console.log("Mutation target", mutation.target); // Node that was mutated
-        console.log("Mutation old val", mutation.oldValue); // Previous value (for attributes)
-        console.log("Added nodes" , mutation.addedNodes); // List of added nodes (for childList)
-        console.log("The node", node);
-        console.log("Removed node" , mutation.removedNodes); // List of removed nodes (for childList)
-      */
+      //console.log("------------------------------------------------");
+      //console.log("Mutation type" , mutation.type); // Type of mutation (attributes, childList, etc.)
+      //console.log("Mutation target", mutation.target); // Node that was mutated
+      //console.log("Mutation old val", mutation.oldValue); // Previous value (for attributes)
+      //console.log("Added nodes" , mutation.addedNodes); // List of added nodes (for childList)
+      //console.log("The node", node);
+      //console.log("Removed node" , mutation.removedNodes); // List of removed nodes (for childList)
+      
 
     }
   });
@@ -89,3 +154,5 @@ observer.observe(table, config);
 
 // To stop observing later:
 // observer.disconnect();
+
+*/

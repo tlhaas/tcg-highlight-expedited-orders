@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "TCG Highlight Expedited Orders",
-  "version": "1.2.3",
+  "version": "1.2.3.1",
   "permissions": ["activeTab", "storage"],
   "description": "Highlights shippable orders with Expedited shipping on your TCGPlayer Order list.",
   "icons": {
@@ -10,7 +10,10 @@
   },
   "content_scripts": [
     {
-      "matches": ["*://store.tcgplayer.com/admin/orders/*"],
+      "matches": [
+        "*://store.tcgplayer.com/admin/orders/*",
+        "*://sellerportal.tcgplayer.com/orders*"
+      ],
       "js": ["js/the-business.js"],
       "css": ["css/styles.css"],
       "run_at": "document_end"
