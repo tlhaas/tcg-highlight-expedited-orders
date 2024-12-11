@@ -3,7 +3,7 @@
   "name": "TCG Highlight Expedited Orders",
   "version": "2.0.0",
   "permissions": ["activeTab", "storage"],
-  "description": "Adds color highlighting to your TCGPlayer Order List so it is become more betterer.",
+  "description": "Adds color highlighting to your TCGPlayer Order List. Works on both old and new UIs.",
   "icons": {
     "48": "icons/taco-48.png",
     "96": "icons/taco-96.png"
