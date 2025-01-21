@@ -55,7 +55,7 @@ function observeOrderListPage() {
               const status        = tdElements[5].innerText;
               const isDirect      = status.includes("Direct");
               const shippingType  = tdElements[6].innerText;
-              const orderTotal    = parseFloat(tdElements[9].innerText.replace('$', '')); 
+              const orderTotal    = parseFloat(tdElements[9].innerText.replace('$','').replace(',','')); 
 
               // remove the taco classes from all <tr> elements because they get reused by the SPA code
               const tacoClasses = ["taco-expedited","taco-intl","taco-bmwt","taco-pickup","taco-presale","taco-ready-for-pickup"];  

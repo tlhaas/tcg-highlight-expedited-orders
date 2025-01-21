@@ -1,7 +1,7 @@
 {
   "manifest_version": 2,
   "name": "TCG Highlight Expedited Orders",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "permissions": ["activeTab", "storage"],
   "description": "Adds color highlighting to your TCGPlayer Order List. Works on both old and new UIs.",
   "icons": {
