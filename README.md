@@ -14,3 +14,7 @@ This is the current list of highlight colors:
 * Presale Orders (Orange)
 
 This code will work with both the old and new Order UIs (as of Dec 10, 2024).
+
+## Notes
+
+`zip -vr filename.zip css js icons manifest.json` for CLI zipping. Yes I am this lazy.
