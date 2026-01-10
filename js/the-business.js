@@ -18,6 +18,7 @@ function observeOrderListPage() {
     trTargetString = "tbody > tr";
   }
 
+
   const mutationCallback = function(mutationsList, observer) {
     for (const mutation of mutationsList) {
     
@@ -52,11 +53,17 @@ function observeOrderListPage() {
 
               // get the row data
               const tdElements    = tr.querySelectorAll('td');
-              const status        = tdElements[5].innerText;
-              const isDirect      = status.includes("Direct");
-              const shippingType  = tdElements[6].innerText;
-              const orderTotal    = parseFloat(tdElements[9].innerText.replace('$','').replace(',','')); 
+              let status, isDirect, shippingType, orderTotal;
 
+              // Columns where the data exists are different depending on UI Version
+              // Remember that COLS will be 0-indexed in either situation 
+              const COLS = UI_VER === "OLD" ? { status: 6, shipping: 7, total: 11 } : { status: 5, shipping: 6, total: 9 };
+
+              status        = tdElements[COLS.status]?.textContent.trim();
+              isDirect      = status.includes("Direct");
+              shippingType  = tdElements[COLS.shipping]?.textContent.trim();
+              orderTotal    = parseFloat(tdElements[COLS.total]?.textContent?.replace(/[$,]/g, ''));
+              
               // remove the taco classes from all <tr> elements because they get reused by the SPA code
               const tacoClasses = ["taco-expedited","taco-intl","taco-bmwt","taco-pickup","taco-presale","taco-ready-for-pickup"];  
               tacoClasses.forEach(
@@ -66,6 +73,7 @@ function observeOrderListPage() {
               );
 
               // is the code more readable like this? i have no idea.
+
               if(orderTotal > 49.99 && shippingType === "Standard" && !isDirect)      { tr.classList.add("taco-bmwt"); }
               if(shippingType === "Expedited" && !isDirect)                           { tr.classList.add("taco-expedited"); }
               if(shippingType === "International" && !isDirect)                       { tr.classList.add("taco-intl"); }
