@@ -10,14 +10,16 @@ function observeOrderListPage() {
   let rootNode, trTargetString;
 
   if (UI_VER === "NEW"){
-    rootNode = document.body;  // On the new UI we need to target the body because the table doesn't exist at page load
-    trTargetString = ".sp-order-index-view tbody.tcg-table-body > tr"; // we need to be this specific because this code also fires on the Orders Detail page due to a shared UI
+    
+    // On the new UI we need to target the body because the table doesn't exist at page load
+    rootNode = document.body;  
+    trTargetString = ".order-index-page tbody > tr"
   }  
+
   else {
     rootNode = document.querySelector('table'); // table exists at page load in the old UI, so we can target it
     trTargetString = "tbody > tr";
   }
-
 
   const mutationCallback = function(mutationsList, observer) {
     for (const mutation of mutationsList) {
@@ -42,6 +44,8 @@ function observeOrderListPage() {
 
         const allTR = rootNode.querySelectorAll(trTargetString);
         
+        console.log(allTR);
+
         // sometimes there are 0 <tr> tags while the SPA is injecting into the DOM, so we don't want to run this part  
         if (allTR.length > 0) { 
           allTR.forEach(tr => {

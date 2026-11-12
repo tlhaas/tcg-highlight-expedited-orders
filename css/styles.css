@@ -1,14 +1,11 @@
-tr.ready-to-ship.taco-expedited, tr.taco-expedited { background-color: #e7b293 !important; }
-tr.ready-to-ship.taco-expedited td, tr.taco-expedited td { font-weight: bold; }
+tr.ready-to-ship.taco-expedited td, tr.taco-expedited td { background-color: #e7b293 !important; font-weight: bold; }
 
-tr.ready-to-ship.taco-intl { background-color: #a6d608 !important; }
+tr.ready-to-ship.taco-intl td { background-color: #a6d608 !important; }
 
-tr.ready-to-ship.taco-bmwt, tr.taco-bmwt { background-color: #e0dd81 !important; }
+tr.ready-to-ship.taco-bmwt td, tr.taco-bmwt td { background-color: #e0dd81 !important; font-weight: bold; }
 
-tr.ready-to-ship.taco-bmwt td, tr.taco-bmwt td { font-weight: bold; }
+tr.taco-pickup td { background-color: #dbb4db !important; }
 
-tr.taco-pickup { background-color: #dbb4db !important; }
+tr.taco-ready-for-pickup td { background-color: #acafdd !important; }
 
-tr.taco-ready-for-pickup { background-color: #acafdd !important; }
-
-tr.taco-presale { background-color: #ffbf00 !important; }
+tr.taco-presale td { background-color: #ffbf00 !important; }
