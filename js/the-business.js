@@ -13,7 +13,7 @@ function observeOrderListPage() {
     
     // On the new UI we need to target the body because the table doesn't exist at page load
     rootNode = document.body;  
-    trTargetString = ".order-index-page tbody > tr"
+    trTargetString = ".order-index-page tbody > tr";
   }  
 
   else {
@@ -43,8 +43,6 @@ function observeOrderListPage() {
       if(mutation.type === 'childList'){  
 
         const allTR = rootNode.querySelectorAll(trTargetString);
-        
-        console.log(allTR);
 
         // sometimes there are 0 <tr> tags while the SPA is injecting into the DOM, so we don't want to run this part  
         if (allTR.length > 0) { 
